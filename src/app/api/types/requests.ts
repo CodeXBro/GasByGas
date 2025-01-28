@@ -1,0 +1,10 @@
+export enum RequestStatus {
+    PLACED = "PLACED",
+    CONFIRMED = "CONFIRMED",
+    READY = "READY",
+    DISPATCHED = "DISPATCHED",
+    ARRIVED = "ARRIVED",
+    DELIVERED = "DELIVERED",
+    CANCELLED = "CANCELLED",
+    EXPIRED = "EXPIRED"
+}
