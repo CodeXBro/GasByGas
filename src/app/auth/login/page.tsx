@@ -87,7 +87,7 @@ export default function LoginPage() {
         <div>
           <label
             htmlFor="email"
-            className="block text-sm font-medium text-green-700 dark:text-gray-200"
+            className="block text-sm font-medium text-red-700 dark:text-gray-200"
           >
             Email address
           </label>
