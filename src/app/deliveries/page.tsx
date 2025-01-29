@@ -47,17 +47,45 @@ function Deliveries() {
     });
 
     const columns = [
-        { key: 'outlet', label: 'Outlet', render: (delivery: any) => `${delivery.outlet.name}/${delivery.outlet.district}` },
-        {
-            key: 'order', label: 'Order Items', render: ((delivery: any) => {
-                return delivery.items.map((d: any) => (
-                    <div key={d.type}>{(GasTypesValues as any)[d.type]}: {d.quantity}</div>
-                ))
-            })
+        { 
+            key: 'outlet', 
+            label: 'Outlet', 
+            render: (delivery: any) => {
+                if (delivery.outlet) {
+                    return `${delivery.outlet.name || 'No Name'}/${delivery.outlet.district || 'No District'}`;
+                }
+                return 'No Outlet';
+            }
         },
-        { key: 'lastUpdatedAt', label: 'Last Updated At', render: (delivery: any) => moment(delivery.updatedAt).format('YYYY-MM-DD HH:MM') },
-        { key: 'status', label: 'Status', render: (request: any) => <StatusLabel status={request.status} /> }
+        {
+            key: 'order', 
+            label: 'Order Items', 
+            render: (delivery: any) => {
+                if (delivery.items && delivery.items.length > 0) {
+                    return delivery.items.map((d: any) => (
+                        <div key={d.type}>{(GasTypesValues as any)[d.type]}: {d.quantity}</div>
+                    ));
+                }
+                return 'No Items';
+            }
+        },
+        { 
+            key: 'lastUpdatedAt', 
+            label: 'Last Updated At', 
+            render: (delivery: any) => {
+                if (delivery.updatedAt) {
+                    return moment(delivery.updatedAt).format('YYYY-MM-DD HH:mm');
+                }
+                return 'No Date';
+            }
+        },
+        { 
+            key: 'status', 
+            label: 'Status', 
+            render: (request: any) => <StatusLabel status={request.status} /> 
+        }
     ];
+    
 
     const handleOpenPopup = () => {
         setIsPopupOpen(true);
