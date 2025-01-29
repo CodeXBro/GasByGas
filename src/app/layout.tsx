@@ -18,9 +18,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Gas by Gas",
   description: "Gas distributor application for Outlets and Consumers",
-  icons: [
-    { rel: 'icon', type: 'image/x-icon', url: "/favicon.ico" }
-  ]
+  icons: [{ rel: "icon", type: "image/x-icon", url: "/favicon.ico" }],
 };
 
 export default function RootLayout({
@@ -31,7 +29,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-
         <StoreProvider>
           <AppThemeProvider>
             {children}

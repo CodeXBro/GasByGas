@@ -1,50 +1,59 @@
-import { ReactNode, useEffect } from 'react';
-import Sidebar from '../sidebar/Sidebar';
-import Header from '../header/Header';
-import { useRouter } from 'next/navigation';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@/data';
-import useUser from '@/hooks/useUser';
+import { ReactNode, useEffect } from "react";
+import Header from "../header/Header";
+import { useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/data";
+import useUser from "@/hooks/useUser";
+import styled from "styled-components";
 
 interface AppLayoutProps {
-    children: ReactNode;
+  children: ReactNode;
 }
 
+const LayoutWrapper = styled.div`
+  min-height: 100vh;
+  display: flex;
+  background-color: #e8e9eb;
+`;
+
+const ContentWrapper = styled.div`
+  flex: 1;
+  overflow: hidden;
+`;
+
+const MainContent = styled.main`
+  padding: 1.5rem;
+`;
+
 export default function AppLayout({ children }: AppLayoutProps) {
+  const dispatch = useDispatch();
+  const { replace: navigate } = useRouter();
 
-    const dispatch = useDispatch()
-    const { replace: navigate } = useRouter();
+  const { isLoggedIn, user } = useSelector((state: RootState) => state.auth);
 
-    const { isLoggedIn, user } = useSelector((state: RootState) => state.auth)
+  useEffect(() => {
+    dispatch.auth.fetchUser();
+  }, []);
 
-    useEffect(() => {
-        dispatch.auth.fetchUser();
-    }, [])
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate("/auth/login");
+    } else {
+      if (user && user.requestChangePassword) {
+        navigate("/settings/change-password");
+      }
+    }
+  }, [isLoggedIn, navigate, user]);
 
-    useEffect(() => {
-        if (!isLoggedIn) {
-            navigate('/auth/login')
-        } else {
-            if (user && user.requestChangePassword) {
-                navigate('/settings/change-password')
-            }
-        }
-    }, [isLoggedIn, navigate, user])
-
-    return (
-        <div className="min-h-screen flex">
-            {/* Sidebar */}
-            <Sidebar />
-
-            {/* Main Content */}
-            <div className="flex-1 overflow-hidden">
-                {/* Header */}
-                <Header />
-                {/* Page Content */}
-                <main className="p-6 overflow-x-scroll">
-                    {children}
-                </main>
-            </div>
-        </div>
-    );
+  return (
+    <LayoutWrapper>
+      {/* Main Content */}
+      <ContentWrapper>
+        {/* Header */}
+        <Header />
+        {/* Page Content */}
+        <MainContent>{children}</MainContent>
+      </ContentWrapper>
+    </LayoutWrapper>
+  );
 }

@@ -1,79 +1,83 @@
-'use client';
+"use client";
 
-import React from 'react';
-import DropdownMenu from '../subcomponents/dropdown';
-import { EditIcon } from 'lucide-react';
+import React from "react";
+import DropdownMenu from "../subcomponents/dropdown";
+import { EditIcon } from "lucide-react";
 
 interface TableProps {
-    columns: { key: string; label: string, render?: (item: any) => void }[];
-    data: Record<string, any>[];
-    actions?: { label: string, onClick: (item: any) => void, condition?: (item: any) => boolean}[]
+  columns: { key: string; label: string; render?: (item: any) => void }[];
+  data: Record<string, any>[];
+  actions?: {
+    label: string;
+    onClick: (item: any) => void;
+    condition?: (item: any) => boolean;
+  }[];
 }
 
 export const Table: React.FC<TableProps> = ({ columns, data, actions }) => {
-    return (
-        <div className="overflow-x-auto bg-white shadow-lg rounded-lg border border-gray-100 dark:bg-gray-900 dark:border-gray-700">
-            <table className="min-w-full table-auto">
-                <thead className="bg-gray-50 dark:bg-gray-800">
-                    <tr>
-                        {columns.map((col) => (
-                            <th
-                                key={col.key}
-                                className="px-6 py-4 text-left text-sm font-semibold text-gray-800 dark:text-gray-200 tracking-wide"
-                            >
-                                {col.label}
-                            </th>
-                        ))}
-                        {
-                            actions?.length ?
+  return (
+    <div className="space-y-6 p-6">
+      {/* Table Card */}
+      <div className="bg-white shadow-lg rounded-lg p-6">
+        {/* Table Header */}
+        <table className="min-w-full table-auto border-collapse">
+          <thead className="bg-gradient-to-r from-[#ffa500] to-[#ff7f00] text-white">
+            <tr>
+              {columns.map((col) => (
+                <th
+                  key={col.key}
+                  className="px-6 py-3 text-left text-base font-semibold uppercase tracking-wider"
+                >
+                  {col.label}
+                </th>
+              ))}
+              {actions?.length ? (
+                <th className="px-6 py-3 text-left text-base font-semibold"></th>
+              ) : null}
+            </tr>
+          </thead>
 
-                                <th
-                                    key={'action'}
-                                    className="px-6 py-4 text-left text-sm font-semibold text-gray-800 dark:text-gray-200 tracking-wide"
-                                >
-                                    Action
-                                </th> :
-                                null
-                        }
-                    </tr>
-                </thead>
-                <tbody>
-                    {data.map((row, index) => (
-                        <tr
-                            key={index}
-                            className={`${index % 2 === 0 ? 'bg-gray-50' : 'bg-gray-100'
-                                } hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200`}
-                        >
-                            {columns.map((col) => (
-                                <td
-                                    key={col.key}
-                                    className="px-6 py-4 text-sm text-gray-600 dark:text-gray-300"
-                                >
-                                    {col.render ? col.render(row) : row[col.key]}
-                                </td>
-                            ))}
-                            {
-                                actions?.length ?
-                                    <td
-                                        key={'action'}
-                                        className="px-6 py-4 text-sm text-gray-600 dark:text-gray-300"
-                                    >
-                                        <DropdownMenu
-                                            buttonText={
-                                                <div className='w-8 flex'>
-                                                    <EditIcon className='w-4 h-4'/>
-                                                </div>
-                                            }
-                                            items={
-                                                actions
-                                                    .filter(action => action.condition ? action.condition(row) : true)
-                                                    .map(a => ({ label: a.label, onClick: a.onClick.bind(null, row) }))} />
-                                    </td> : null
-                            }
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
-    );
+          {/* Table Body */}
+          <tbody>
+            {data.map((row, index) => (
+              <tr
+                key={index}
+                className={`${
+                  index % 2 === 0 ? "bg-white" : "bg-[#f7f7f7]"
+                } hover:bg-[#ffd699] transition-all duration-300 cursor-pointer border-b-2`}
+              >
+                {/* Table Data */}
+                {columns.map((col) => (
+                  <td key={col.key} className="px-6 py-4 text-sm text-gray-700">
+                    {col.render ? col.render(row) : row[col.key] || "N/A"}
+                  </td>
+                ))}
+
+                {/* Action Button */}
+                {actions?.length ? (
+                  <td className="px-6 py-4 text-sm text-gray-700">
+                    <DropdownMenu
+                      buttonText={
+                        <div className="w-8 flex justify-center items-center">
+                          <EditIcon className="w-5 h-5 text-[#ffa500]" />
+                        </div>
+                      }
+                      items={actions
+                        .filter((action) =>
+                          action.condition ? action.condition(row) : true
+                        )
+                        .map((a) => ({
+                          label: a.label,
+                          onClick: a.onClick.bind(null, row),
+                        }))}
+                    />
+                  </td>
+                ) : null}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
 };
