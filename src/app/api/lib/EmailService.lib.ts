@@ -33,7 +33,7 @@ class EmailService {
     // Populate the email details
     sendSmtpEmail.subject = subject;
     sendSmtpEmail.htmlContent = htmlContent;
-    sendSmtpEmail.sender = { name: "GasByGas Support", email: 'mohamedsakirhassan@gmail.com' };
+    sendSmtpEmail.sender = { name: "GasByGas", email: 'farhanfawmy30@gmail.com' };
     sendSmtpEmail.to = recipients;
     if (replyTo) sendSmtpEmail.replyTo = replyTo;
     if (headers) sendSmtpEmail.headers = headers;
@@ -58,7 +58,7 @@ class EmailService {
             <h2 style="color: #333;">New Request Received</h2>
             <p>Dear ${customerName},</p>
             <p>
-              We have received your new request. Below are the details:
+              Your new request has been received. Please find the details below:
             </p>
             <ul style="list-style-type: none; padding: 0;">
               <li><strong>Request Token:</strong> ${token}</li>
@@ -67,7 +67,8 @@ class EmailService {
               <li><strong>Quantity:</strong> ${quantity}</li>
             </ul>
             <p>
-              Please ensure you complete the necessary steps before the deadline. If you have any questions, feel free to reply to this email or contact our support team.
+              Kindly make sure to complete the necessary steps before the deadline. 
+              If you have any questions, feel free to reply to this email or reach out to our support team.
             </p>
             <p style="margin-top: 20px;">Thank you,<br />The Team</p>
           </div>
@@ -78,7 +79,7 @@ class EmailService {
     // Email details
     const subject = "Your New Request Details";
     const recipients = [{ name: customerName, email }];
-    const replyTo = { name: "GasByGas Support", email: "mohamedsakirhassan@gmail.com" };
+    const replyTo = { name: "GasByGas", email: "farhanfawmy30@gmail.com" };
     const headers = { "X-Priority": "1 (Highest)" };
 
     try {
@@ -100,7 +101,7 @@ class EmailService {
             <h2 style="color: #333;">New Request Received</h2>
             <p>Dear ${outletName},</p>
             <p>
-              You have received a new request from a customer. Below are the details:
+              Your new request has been received. Please find the details below:
             </p>
             <ul style="list-style-type: none; padding: 0;">
               <li><strong>Customer Name:</strong> ${customerName}</li>
@@ -118,7 +119,7 @@ class EmailService {
     // Email details
     const subject = "New Request From Customer";
     const recipients = [{ name: outletName, email }];
-    const replyTo = { name: "GasByGas Support", email: "mohamedsakirhassan@gmail.com" };
+    const replyTo = { name: "GasByGas", email: "farhanfawmy30@gmail.com" };
     const headers = { "X-Priority": "1 (Highest)" };
 
     try {
@@ -145,8 +146,7 @@ class EmailService {
                   <li><strong>Password:</strong> ${password}</li>
                 </ul>
                 <p>
-                  Please log in to your account using the credentials provided and update your password after your first login.
-                </p>
+                  Kindly log in to your account using the provided credentials and remember to update your password upon your first login.                </p>
                 <p>
                   If you have any questions, feel free to reply to this email or contact our support team.
                 </p>
@@ -159,7 +159,7 @@ class EmailService {
     // Email details
     const subject = "Welcome to Our Platform!";
     const recipients = [{ name, email }];
-    const replyTo = { name: "GasByGas Support", email: "mohamedsakirhassan@gmail.com" };
+    const replyTo = { name: "GasByGas", email: "farhanfawmy30@gmail.com" };
     const headers = { "X-Priority": "1 (Highest)" };
 
     try {
@@ -188,8 +188,8 @@ class EmailService {
               <h2 style="color: #333;">Handover Your Empty Cylinder and Collect New Cylinder</h2>
               <p>Dear ${customerName},</p>
               <p>
-                We would like to inform you that your new cylinder is ready for collection. 
-                Please ensure you hand over your empty cylinder to our representative during the exchange.
+                We are happy to inform you that your new cylinder is now ready for collection. 
+                Please make sure to hand over your empty cylinder to our representative during the exchange.
               </p>
               <p><strong>Collect By:</strong> ${dateToBeCollected}</p>
               <p>
@@ -204,7 +204,7 @@ class EmailService {
     // Email details
     const subject = "Action Required: Handover Empty Cylinder and Collect New Cylinder";
     const recipients = [{ name: customerName, email }];
-    const replyTo = { name: "GasByGas Support", email: "mohamedsakirhassan@gmail.com" };
+    const replyTo = { name: "GasByGas", email: "farhanfawmy30@gmail.com" };
     const headers = { "X-Priority": "1 (Highest)" };
 
     try {
@@ -227,8 +227,7 @@ class EmailService {
             <h2 style="color: #333;">Order Rescheduled</h2>
             <p>Dear ${customerName},</p>
             <p>
-              We would like to inform you that your order has been rescheduled. Below are the updated details:
-            </p>
+                We would like to notify you that your order has been rescheduled. Please find the updated details below:                  </p>
             <ul style="list-style-type: none; padding: 0;">
               <li><strong>New Date:</strong> ${newDate}</li>
               <li><strong>Reason:</strong> ${reason}</li>
@@ -245,7 +244,7 @@ class EmailService {
     // Email details
     const subject = "Your Order Has Been Rescheduled";
     const recipients = [{ name: customerName, email }];
-    const replyTo = { name: "GasByGas Support", email: "mohamedsakirhassan@gmail.com" };
+    const replyTo = { name: "GasByGas", email: "farhanfawmy30@gmail.com" };
     const headers = { "X-Priority": "1 (Highest)" };
 
     try {
