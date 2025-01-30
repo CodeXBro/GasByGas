@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { createGlobalStyle } from "styled-components";
 import styled from "styled-components";
 import Link from "next/link";
+import Logo from "../logo";
 
 // Global Styles
 const GlobalStyle = createGlobalStyle`
@@ -47,10 +48,8 @@ const MainContent = styled.main`
 `;
 
 const StyledLogo = styled.div`
-  font-size: 28px;
-  font-weight: 500;
-  margin-bottom: 10px;
   cursor: pointer;
+  width: auto;
 
   span {
     color: #fff;
@@ -129,16 +128,15 @@ export const AppThemeProvider: React.FC<AppThemeProviderProps> = ({
             left: "10px",
             opacity: 0.6,
           }}
-        >
-          <StyledLogo>
-            Gas<span>BY</span>Gas
-          </StyledLogo>
-        </div>
+        ></div>
         {/* Main Content */}
         <MainContent>{children}</MainContent>
         {/* Footer */}
         <FooterContainer>
           <FooterContent>
+            <div>
+              Gas<span>BY</span>Gas
+            </div>
             <FooterText>
               &copy; {new Date().getFullYear()} GasBYGas. All rights reserved.
             </FooterText>
