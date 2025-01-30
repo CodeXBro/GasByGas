@@ -360,28 +360,37 @@ function Requests() {
 
   return (
     <AppLayout>
-      <div className="min-h-screen bg-gray-100 dark:bg-gray-800 p-4">
-        <h1 className="text-2xl font-bold mb-4 text-gray-700 dark:text-gray-200">
-          Customer Requests
-        </h1>
+      <div
+        className="min-h-screen bg-gray-100"
+        style={{ backgroundColor: "#e8e9eb" }}
+        p-4
+      >
+        <div className="flex flex-col items-center justify-center">
+          <h1 className="text-2xl font-bold mb-4 text-gray-700 dark:text-gray-500">
+            Customer Requests
+          </h1>
 
-        {/* Add Request Button */}
-        {showAddRequest && (
-          <div className="my-2">
-            <Button onClick={handleOpenPopup} text=" Create Request" />
-          </div>
-        )}
+          {/* Add Request Button */}
+          {showAddRequest && (
+            <div className="my-2">
+              <Button onClick={handleOpenPopup} text=" Create Request" />
+            </div>
+          )}
+        </div>
 
         {/* Requests Table */}
-        <div className="my-2 w-1/2">
-          <Input
-            label="Search by Token"
-            placeholder="Search by Token"
-            name="token"
-            value={searchToken}
-            onChange={onSearchToken.bind(null, "token")}
-          />
+        <div className="my-2 w-full flex justify-center">
+          <div className="w-1/2 text-center">
+            <Input
+              label="Search by Token"
+              placeholder="Search by Token"
+              name="token"
+              value={searchToken}
+              onChange={onSearchToken.bind(null, "token")}
+            />
+          </div>
         </div>
+
         <Table columns={columns} data={filteredRequests} actions={actions} />
 
         {/* Popup for Creating Request */}

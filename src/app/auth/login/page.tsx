@@ -35,18 +35,18 @@ const Label = styled.label`
   color: #000000;
 `;
 
-const Input = styled.input<{ isError: boolean }>`
+const Input = styled.input<{ iserror: boolean }>`
   padding: 14px 16px;
   border-radius: 8px;
-  border: 1px solid ${(props) => (props.isError ? "#f87171" : "#020202")};
-  background-color: ${(props) => (props.isError ? "#fff0f0" : "#f8fafc")};
+  border: 1px solid ${(props) => (props.iserror ? "#f87171" : "#020202")};
+  background-color: ${(props) => (props.iserror ? "#fff0f0" : "#f8fafc")};
   font-size: 16px;
   outline: none;
   transition: border-color 0.3s ease;
   color: #000000; /* Set text color to black by default */
 
   &:focus {
-    border-color: ${(props) => (props.isError ? "#f87171" : "#ffa500")};
+    border-color: ${(props) => (props.iserror ? "#f87171" : "#ffa500")};
     color: #000000; /* Ensure the text remains black on focus */
   }
 
@@ -54,7 +54,6 @@ const Input = styled.input<{ isError: boolean }>`
     color: #000000; /* Make the placeholder text black */
   }
 `;
-
 
 const ErrorMessage = styled.p`
   color: #f87171;
@@ -180,7 +179,7 @@ export default function LoginPage() {
             required
             value={form.email}
             onChange={handleChange}
-            isError={!!errors.email}
+            iserror={!!errors.email}
           />
           {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
         </FormField>
@@ -195,7 +194,7 @@ export default function LoginPage() {
             required
             value={form.password}
             onChange={handleChange}
-            isError={!!errors.password}
+            iserror={!!errors.password}
           />
           {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
         </FormField>
