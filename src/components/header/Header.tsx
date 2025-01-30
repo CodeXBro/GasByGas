@@ -19,6 +19,7 @@ import { useDispatch } from "react-redux";
 import { Dispatch } from "@/data";
 import useUser from "@/hooks/useUser";
 import { Sign } from "crypto";
+import Logo from "../logo";
 
 // Styled Components
 const HeaderContainer = styled.header`
@@ -31,7 +32,7 @@ const HeaderContainer = styled.header`
   width: calc(100% - 40rem);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
-  background: #ffa500;
+  background: #e8e9eb;
 
   @media (max-width: 1200px) {
     padding: 1rem 3rem;
@@ -183,6 +184,7 @@ const Header = () => {
 
   return (
     <HeaderContainer>
+      <Logo />
       <NavMenu>
         {navigation.map((item) => (
           <a key={item.name} href={item.href}>

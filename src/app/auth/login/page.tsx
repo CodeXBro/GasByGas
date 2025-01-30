@@ -7,6 +7,92 @@ import Link from "next/link";
 import { Dispatch } from "@/data";
 import Button from "@/components/subcomponents/button";
 import { toast } from "react-toastify";
+import styled from "styled-components";
+
+// Styled Components for the Login Page
+const FormWrapper = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 24px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+`;
+
+const FormField = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
+
+const Label = styled.label`
+  font-size: 14px;
+  font-weight: 600;
+  color: #000000;
+`;
+
+const Input = styled.input<{ isError: boolean }>`
+  padding: 14px 16px;
+  border-radius: 8px;
+  border: 1px solid ${(props) => (props.isError ? "#f87171" : "#020202")};
+  background-color: ${(props) => (props.isError ? "#fff0f0" : "#f8fafc")};
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s ease;
+  color: #000000; /* Set text color to black by default */
+
+  &:focus {
+    border-color: ${(props) => (props.isError ? "#f87171" : "#ffa500")};
+    color: #000000; /* Ensure the text remains black on focus */
+  }
+
+  &::placeholder {
+    color: #000000; /* Make the placeholder text black */
+  }
+`;
+
+
+const ErrorMessage = styled.p`
+  color: #f87171;
+  font-size: 12px;
+  margin-top: 4px;
+`;
+
+const ForgotPasswordLink = styled(Link)`
+  font-size: 14px;
+  color: #000000;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: #ffa500;
+  }
+`;
+
+const RememberMeWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const SignUpLink = styled(Link)`
+  font-size: 14px;
+  color: #000000;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: #ffa500;
+  }
+`;
+
+const ActionContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+`;
 
 export default function LoginPage() {
   const dispatch = useDispatch<Dispatch>();
@@ -83,117 +169,68 @@ export default function LoginPage() {
 
   return (
     <AuthLayout title="Sign in to your account">
-      <form className="space-y-6" onSubmit={handleSubmit}>
-        <div>
-          <label
-            htmlFor="email"
-            className="block text-sm font-medium text-gray-700 dark:text-gray-200"
-          >
-            Email address
-          </label>
-          <div className="mt-1">
-            <input
-              id="email"
-              name="email"
-              type="email"
-              autoComplete="email"
-              required
-              value={form.email}
-              onChange={handleChange}
-              className={`block w-full appearance-none rounded-md border px-3 py-2 shadow-sm focus:outline-none sm:text-sm 
-                                dark:bg-gray-700 dark:text-white dark:placeholder-gray-400
-                                ${
-                                  errors.email
-                                    ? "border-red-300 focus:border-red-500 focus:ring-red-500 dark:border-red-600 dark:focus:border-red-500"
-                                    : "border-gray-300 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-400"
-                                }`}
-            />
-            {errors.email && (
-              <p className="mt-2 text-sm text-red-600 dark:text-red-400">
-                {errors.email}
-              </p>
-            )}
-          </div>
-        </div>
+      <FormWrapper onSubmit={handleSubmit}>
+        <FormField>
+          <Label htmlFor="email">Email address</Label>
+          <Input
+            id="email"
+            name="email"
+            type="email"
+            autoComplete="email"
+            required
+            value={form.email}
+            onChange={handleChange}
+            isError={!!errors.email}
+          />
+          {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
+        </FormField>
 
-        <div>
-          <label
-            htmlFor="password"
-            className="block text-sm font-medium text-gray-700 dark:text-gray-200"
-          >
-            Password
-          </label>
-          <div className="mt-1">
-            <input
-              id="password"
-              name="password"
-              type="password"
-              autoComplete="current-password"
-              required
-              value={form.password}
-              onChange={handleChange}
-              className={`block w-full appearance-none rounded-md border px-3 py-2 shadow-sm focus:outline-none sm:text-sm 
-                                dark:bg-gray-700 dark:text-white dark:placeholder-gray-400
-                                ${
-                                  errors.password
-                                    ? "border-red-300 focus:border-red-500 focus:ring-red-500 dark:border-red-600 dark:focus:border-red-500"
-                                    : "border-gray-300 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-400"
-                                }`}
-            />
-            {errors.password && (
-              <p className="mt-2 text-sm text-red-600 dark:text-red-400">
-                {errors.password}
-              </p>
-            )}
-          </div>
-        </div>
+        <FormField>
+          <Label htmlFor="password">Password</Label>
+          <Input
+            id="password"
+            name="password"
+            type="password"
+            autoComplete="current-password"
+            required
+            value={form.password}
+            onChange={handleChange}
+            isError={!!errors.password}
+          />
+          {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
+        </FormField>
 
-        <div className="flex items-center justify-between">
+        <RememberMeWrapper>
           <div className="flex items-center">
             <input
               id="remember-me"
               name="remember-me"
               type="checkbox"
-              className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700"
+              className="h-4 w-4 rounded border-gray-300 text-yellow-500"
             />
-            <label
-              htmlFor="remember-me"
-              className="ml-2 block text-sm text-gray-900 dark:text-gray-200"
-            >
+            <label htmlFor="remember-me" className="ml-2 text-sm text-gray-900">
               Remember me
             </label>
           </div>
+          <ForgotPasswordLink href="/auth/forgot-password">
+            Forgot your password?
+          </ForgotPasswordLink>
+        </RememberMeWrapper>
 
-          <div className="text-sm">
-            <Link
-              href="/auth/forgot-password"
-              className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300"
-            >
-              Forgot your password?
-            </Link>
-          </div>
-        </div>
-
-        <div>
+        <ActionContainer>
           <Button
             type="submit"
             text={isLoading ? "Signing in..." : "Sign in"}
             disabled={isLoading}
           />
-        </div>
-
-        <div className="text-center mt-4">
-          <span className="text-sm text-gray-600 dark:text-gray-400">
-            Don't have an account?{" "}
-            <Link
-              href="/auth/register"
-              className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300"
-            >
-              Sign up
-            </Link>
-          </span>
-        </div>
-      </form>
+          <div className="text-center mt-4">
+            <span className="text-sm text-yellow-500">
+              Don't have an account?{" "}
+              <SignUpLink href="/auth/register">Sign up</SignUpLink>
+            </span>
+          </div>
+        </ActionContainer>
+      </FormWrapper>
     </AuthLayout>
   );
 }
