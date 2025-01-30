@@ -10,7 +10,6 @@ import {
   BookCheck,
   LayoutDashboardIcon,
   MenuIcon,
-  Sidebar,
   User,
 } from "lucide-react";
 import styled from "styled-components";
@@ -18,7 +17,6 @@ import DropdownMenu from "../subcomponents/dropdown";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "@/data";
 import useUser from "@/hooks/useUser";
-import { Sign } from "crypto";
 import Logo from "../logo";
 
 // Styled Components
@@ -31,8 +29,8 @@ const HeaderContainer = styled.header`
   border-radius: 12px;
   width: calc(100% - 40rem);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
   background: #e8e9eb;
+  position: relative;
 
   @media (max-width: 1200px) {
     padding: 1rem 3rem;
@@ -41,24 +39,20 @@ const HeaderContainer = styled.header`
 
   @media (max-width: 768px) {
     padding: 1rem 2rem;
-    width: calc(100% - 24rem);
+    width: 100%;
   }
 
   @media (max-width: 480px) {
-    padding: 1rem 1rem;
-    width: calc(100% - 2rem);
+    padding: 1rem;
+    width: 100%;
   }
-`;
-
-const Title = styled.h1`
-  font-size: 1.25rem;
-  font-weight: 600;
 `;
 
 const NavMenu = styled.nav`
   display: flex;
   gap: 1.5rem;
   align-items: center;
+  flex-wrap: wrap;
 
   a {
     color: #222;
@@ -71,8 +65,26 @@ const NavMenu = styled.nav`
     transition: color 0.3s ease;
 
     &:hover {
-      color: #e8e9eb;
+      color: #ffa500;
     }
+  }
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
+const MobileMenuButton = styled.button`
+  display: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: #222;
+  font-size: 1.5rem;
+
+  @media (max-width: 768px) {
+    display: block;
   }
 `;
 
@@ -80,30 +92,54 @@ const UserSection = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
-`;
-
-const UserHeader = styled.div`
-  display: flex;
-  align-items: center;
-  color: #222;
-  font-size: 1rem;
-  font-weight: 600;
   position: relative;
-
-  &:hover {
-    color: #ffa500;
-  }
 `;
 
 const MenuButtonWrapper = styled.div`
+  background: #e8e9eb;
+  padding: 8px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background 0.3s ease;
   position: relative;
-  margin-left: auto;
+
+  &:hover {
+    background: #d6d6d6;
+  }
+`;
+
+const DropdownContainer = styled.div`
+  position: absolute;
+  top: 110%;
+  right: 0;
+  background: #e8e9eb;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 150px;
+  padding: 8px;
+  z-index: 100;
+`;
+
+const MobileNavMenu = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: absolute;
+  top: 60px;
+  right: 10px;
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  border-radius: 8px;
+  width: 200px;
+  z-index: 100;
 `;
 
 const Header = () => {
   const dispatch = useDispatch<Dispatch>();
   const { isAdmin, isOutletManager, isBusiness, user } = useUser();
-
   const [navigation, setNavigation] = useState([
     {
       name: "Dashboard",
@@ -113,6 +149,7 @@ const Header = () => {
     { name: "Projects", href: "/projects", icon: <Menu className="w-6 h-6" /> },
     { name: "Tasks", href: "/tasks", icon: <Menu className="w-6 h-6" /> },
   ]);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     let menu = [
@@ -193,6 +230,19 @@ const Header = () => {
           </a>
         ))}
       </NavMenu>
+      <MobileMenuButton onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+        <MenuIcon className="w-6 h-6" />
+      </MobileMenuButton>
+      {mobileMenuOpen && (
+        <MobileNavMenu>
+          {navigation.map((item) => (
+            <a key={item.name} href={item.href}>
+              {item.icon}
+              <span>{item.name}</span>
+            </a>
+          ))}
+        </MobileNavMenu>
+      )}
       <UserSection>
         <MenuButtonWrapper>
           <DropdownMenu

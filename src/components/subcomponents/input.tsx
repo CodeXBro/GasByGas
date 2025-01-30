@@ -1,6 +1,6 @@
 // components/Input.tsx
-import React, { InputHTMLAttributes } from 'react';
-import classNames from 'classnames';
+import React, { InputHTMLAttributes } from "react";
+import classNames from "classnames";
 
 interface IInputProps {
   id?: string;
@@ -10,7 +10,7 @@ interface IInputProps {
   placeholder?: string;
   disabled?: boolean;
   error?: string;
-  type?: 'text' | 'password' | 'email' | 'date' | 'number' | 'tel';
+  type?: "text" | "password" | "email" | "date" | "number" | "tel";
   className?: string;
 }
 
@@ -19,20 +19,20 @@ const Input: React.FC<IInputProps & InputHTMLAttributes<HTMLInputElement>> = ({
   label,
   value,
   onChange,
-  placeholder = '',
+  placeholder = "",
   disabled = false,
-  error = '',
-  type = 'text',
-  className = '',
+  error = "",
+  type = "text",
+  className = "",
   ...props
 }) => {
   return (
-    <div className={classNames('flex flex-col space-y-2', className)}>
+    <div className={classNames("flex flex-col space-y-2", className)}>
       <label
         htmlFor={id}
-        className={classNames('text-sm font-medium', {
-          'text-gray-400': disabled,
-          'text-gray-700': !disabled,
+        className={classNames("text-sm font-medium", {
+          "text-gray-400": disabled,
+          "text-gray-700": !disabled,
         })}
       >
         {label}
@@ -41,16 +41,16 @@ const Input: React.FC<IInputProps & InputHTMLAttributes<HTMLInputElement>> = ({
         id={id}
         type={type}
         value={value}
-        onChange={onChange ? (e) => onChange(e.target.value): () => {}}
+        onChange={onChange ? (e) => onChange(e.target.value) : () => {}}
         placeholder={placeholder}
         disabled={disabled}
         className={classNames(
-          'px-4 py-2 border rounded-md focus:outline-none focus:ring-2 transition duration-300',
+          "px-4 py-2 border rounded-md focus:outline-none focus:ring-2 transition duration-300",
           {
-            'bg-gray-200 cursor-not-allowed': disabled,
-            'border-gray-300': !error && !disabled,
-            'border-red-500 ring-2 ring-red-500': error,
-            'focus:ring-blue-500': !error && !disabled,
+            "bg-gray-200 cursor-not-allowed": disabled,
+            "border-gray-300": !error && !disabled,
+            "border-red-500 ring-2 ring-red-500": error,
+            "focus:ring-blue-500": !error && !disabled,
           }
         )}
         {...props}

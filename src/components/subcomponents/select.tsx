@@ -1,8 +1,67 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import classNames from 'classnames';
+import React, { useState } from "react";
+import styled from "styled-components";
 
+// Styled Components
+const SelectContainer = styled.div`
+  position: relative;
+  width: 100%;
+`;
+
+const Label = styled.label`
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #4a5568;
+  margin-bottom: 0.25rem;
+`;
+
+const Input = styled.input<{ $error?: boolean; disabled?: boolean }>`
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid ${(props) => (props.$error ? "#e53e3e" : "#cbd5e0")};
+  border-radius: 6px;
+  background-color: ${(props) => (props.disabled ? "#f7fafc" : "white")};
+  color: ${(props) => (props.disabled ? "#a0aec0" : "#2d3748")};
+  outline: none;
+
+  &:focus {
+    border-color: ${(props) => (props.$error ? "#e53e3e" : "#3182ce")};
+    box-shadow: 0 0 0 2px ${(props) => (props.$error ? "#feb2b2" : "#63b3ed")};
+  }
+`;
+
+const Dropdown = styled.div`
+  position: absolute;
+  width: 100%;
+  margin-top: 4px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 10;
+`;
+
+const Option = styled.div`
+  padding: 10px 14px;
+  cursor: pointer;
+  color: #2d3748;
+
+  &:hover {
+    background: #edf2f7;
+  }
+`;
+
+const ErrorText = styled.p`
+  color: #e53e3e;
+  font-size: 0.75rem;
+  margin-top: 4px;
+`;
+
+// Component
 interface SelectProps {
   name?: string;
   label: string;
@@ -11,7 +70,6 @@ interface SelectProps {
   onChange: (value: string) => void;
   disabled?: boolean;
   error?: string;
-  className?: string;
 }
 
 const Select: React.FC<SelectProps> = ({
@@ -22,70 +80,53 @@ const Select: React.FC<SelectProps> = ({
   onChange,
   disabled = false,
   error,
-  className = '',
 }) => {
-  const [searchQuery, setSearchQuery] = useState((value ? options.find(o => o.value === value)?.label : '') || '');
+  const [searchQuery, setSearchQuery] = useState(
+    (value ? options.find((o) => o.value === value)?.label : "") || ""
+  );
   const [isOpen, setIsOpen] = useState(false);
 
   const filteredOptions = options.filter((option) =>
     option.label.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const selectClasses = classNames(
-    'block w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500',
-    {
-      'bg-gray-100 text-gray-500 cursor-not-allowed': disabled,
-      'border-gray-300 text-gray-700': !error && !disabled,
-      'border-red-500 text-red-500': error,
-    },
-    className
-  );
-
   return (
-    <div className="relative">
-      <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
-        {label}
-      </label>
-
-      {/* Search input */}
-      <input
+    <SelectContainer>
+      <Label>{label}</Label>
+      <Input
         type="text"
-        className={selectClasses}
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
         onFocus={() => setIsOpen(true)}
-        onBlur={() => setTimeout(() => setIsOpen(false), 200)} // Delay to allow for click
+        onBlur={() => setTimeout(() => setIsOpen(false), 200)}
         placeholder="Search..."
         disabled={disabled}
+        $error={!!error}
       />
 
-      {/* Dropdown options */}
       {isOpen && (
-        <div className="absolute w-full mt-1 bg-white dark:bg-gray-800 border border-gray-300 rounded-md shadow-lg max-h-60 overflow-auto z-10">
-          <ul>
-            {filteredOptions.length > 0 ? (
-              filteredOptions.map((option) => (
-                <li
-                  key={option.value}
-                  className="px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
-                  onClick={() => {
-                    onChange(option.value);
-                    setSearchQuery(option.label);
-                    setIsOpen(false);
-                  }}
-                >
-                  {option.label}
-                </li>
-              ))
-            ) : (
-              <li className="px-4 py-2 text-gray-500">No results found</li>
-            )}
-          </ul>
-        </div>
+        <Dropdown>
+          {filteredOptions.length > 0 ? (
+            filteredOptions.map((option) => (
+              <Option
+                key={option.value}
+                onClick={() => {
+                  onChange(option.value);
+                  setSearchQuery(option.label);
+                  setIsOpen(false);
+                }}
+              >
+                {option.label}
+              </Option>
+            ))
+          ) : (
+            <Option>No results found</Option>
+          )}
+        </Dropdown>
       )}
 
-      {error && <p className="text-xs text-red-500 mt-1">{error}</p>}
-    </div>
+      {error && <ErrorText>{error}</ErrorText>}
+    </SelectContainer>
   );
 };
 
