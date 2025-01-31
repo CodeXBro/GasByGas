@@ -290,11 +290,11 @@ export default function RegisterPage() {
         </div>
 
         <div className="text-center mt-4">
-          <span className="text-sm text-gray-600 dark:text-gray-400">
+          <span className="text-sm text-gray-400">
             Already have an account?{" "}
             <Link
               href="/auth/login"
-              className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300"
+              className="font-medium text-yellow-500 hover:text-gray-300"
             >
               Sign in
             </Link>
