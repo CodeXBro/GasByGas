@@ -9,20 +9,6 @@ import Button from "@/components/subcomponents/button";
 import { toast } from "react-toastify";
 import styled from "styled-components";
 
-// Styled Components for the Login Page
-const FormWrapper = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 24px;
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 400px;
-  margin: 0 auto;
-`;
-
 const FormField = styled.div`
   display: flex;
   flex-direction: column;
@@ -35,23 +21,26 @@ const Label = styled.label`
   color: #000000;
 `;
 
-const Input = styled.input<{ iserror: boolean }>`
+const Input = styled.input<{ iserror?: string }>`
   padding: 14px 16px;
   border-radius: 8px;
-  border: 1px solid ${(props) => (props.iserror ? "#f87171" : "#020202")};
-  background-color: ${(props) => (props.iserror ? "#fff0f0" : "#f8fafc")};
+  border: 1px solid
+    ${(props) => (props.iserror === "true" ? "#f87171" : "#020202")};
+  background-color: ${(props) =>
+    props.iserror === "true" ? "#fff0f0" : "#f8fafc"};
   font-size: 16px;
   outline: none;
   transition: border-color 0.3s ease;
-  color: #000000; /* Set text color to black by default */
+  color: #000000;
 
   &:focus {
-    border-color: ${(props) => (props.iserror ? "#f87171" : "#ffa500")};
-    color: #000000; /* Ensure the text remains black on focus */
+    border-color: ${(props) =>
+      props.iserror === "true" ? "#f87171" : "#ffa500"};
+    color: #000000;
   }
 
   &::placeholder {
-    color: #000000; /* Make the placeholder text black */
+    color: #000000;
   }
 `;
 
@@ -157,7 +146,6 @@ export default function LoginPage() {
       ...prev,
       [name]: value,
     }));
-    // Clear error when user starts typing
     if (errors[name as keyof typeof errors]) {
       setErrors((prev) => ({
         ...prev,
@@ -168,7 +156,21 @@ export default function LoginPage() {
 
   return (
     <AuthLayout title="Sign in to your account">
-      <FormWrapper onSubmit={handleSubmit}>
+      <form
+        onSubmit={handleSubmit}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "20px",
+          padding: "24px",
+          backgroundColor: "#ffffff",
+          borderRadius: "12px",
+          boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.1)",
+          width: "100%",
+          maxWidth: "400px",
+          margin: "0 auto",
+        }}
+      >
         <FormField>
           <Label htmlFor="email">Email address</Label>
           <Input
@@ -179,7 +181,7 @@ export default function LoginPage() {
             required
             value={form.email}
             onChange={handleChange}
-            iserror={!!errors.email}
+            iserror={errors.email ? "true" : undefined}
           />
           {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
         </FormField>
@@ -194,7 +196,7 @@ export default function LoginPage() {
             required
             value={form.password}
             onChange={handleChange}
-            iserror={!!errors.password}
+            iserror={errors.password ? "true" : undefined}
           />
           {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
         </FormField>
@@ -207,7 +209,7 @@ export default function LoginPage() {
               type="checkbox"
               className="h-4 w-4 rounded border-gray-300 text-yellow-500"
             />
-            <label htmlFor="remember-me" className="ml-2 text-sm text-gray-900">
+            <label htmlFor="remember-me" className="ml-2 text-sm text-gray-400">
               Remember me
             </label>
           </div>
@@ -223,13 +225,13 @@ export default function LoginPage() {
             disabled={isLoading}
           />
           <div className="text-center mt-4">
-            <span className="text-sm text-yellow-500">
+            <span className="text-sm text-gray-400">
               Don't have an account?{" "}
               <SignUpLink href="/auth/register">Sign up</SignUpLink>
             </span>
           </div>
         </ActionContainer>
-      </FormWrapper>
+      </form>
     </AuthLayout>
   );
 }

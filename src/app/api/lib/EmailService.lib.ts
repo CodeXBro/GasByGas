@@ -1,5 +1,6 @@
 import brevo, { TransactionalEmailsApiApiKeys } from '@getbrevo/brevo';
 
+
 class EmailService {
   private apiInstance: brevo.TransactionalEmailsApi;
 

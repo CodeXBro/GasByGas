@@ -54,7 +54,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
             {isOpen && (
                 <div
                     className={classNames(
-                        'fixed z-10 mb-0 right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg dark:bg-gray-800 dark:border-gray-600',
+                        'fixed z-10 mb-0 right-25 mt-8 w-48  border rounded-md shadow-lg bg-white',
                         menuClassName
                     )}
                 >
@@ -66,7 +66,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
                                     item.onClick()
                                     setIsOpen(false)
                                 }}
-                                className="block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700"
+                                className="block px-4 py-2 text-sm  cursor-pointer text-black dark:hover:bg-yellow-500"
                             >
                                 {item.label}
                             </li>

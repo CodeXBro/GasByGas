@@ -42,29 +42,11 @@ const Heading = styled.h2`
   }
 `;
 
-const FormWrapper = styled.div`
-  margin-top: 2rem;
-  background-color: #ffffff;
-  padding: 2rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s ease;
-
-  &.dark {
-    background-color: #fff;
-  }
-`;
-
 const LogoImg = styled.div`
   display: flex;
   justify-content: center;
   padding: 0.5rem;
   margin-top: 2.5rem;
-`;
-
-const FooterText = styled.span`
-  font-size: 0.875rem;
-  color: #000000;
 `;
 
 export default function AuthLayout({
@@ -89,13 +71,13 @@ export default function AuthLayout({
     <LayoutWrapper>
       <Container>
         {/* Pass the width and height directly as props to Logo */}
-        {showLogo && <Logo width="100px" height="100px" />}{" "}
+        {showLogo && <Logo width="100px" height="100px" />} {" "}
         {/* Resize the logo here */}
         <Heading className="Login-title">{title}</Heading>
       </Container>
 
       <Container>
-        <FormWrapper className="Login-title">{children}</FormWrapper>
+        {children}
       </Container>
     </LayoutWrapper>
   );
