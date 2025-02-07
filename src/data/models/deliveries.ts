@@ -33,6 +33,7 @@ export const deliveries = {
       try {
         const { status, data } = await client.get('/api/v1/deliveries');
         if (status === HTTP_STATUS.OK) {
+          console.log(data, "data")
           dispatch.deliveries.setDeliveries(data);
         }
       } catch (error) {

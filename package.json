@@ -13,6 +13,7 @@
     "@rematch/core": "^2.2.0",
     "@rematch/loading": "^2.1.2",
     "@rematch/persist": "^2.1.2",
+    "@types/styled-components": "^5.1.34",
     "axios": "^1.7.9",
     "bcryptjs": "^2.4.3",
     "class-transformer": "^0.5.1",
@@ -29,7 +30,8 @@
     "react-dom": "^19.0.0",
     "react-redux": "^9.2.0",
     "react-toastify": "^11.0.2",
-    "redux": "^5.0.1"
+    "redux": "^5.0.1",
+    "styled-components": "^6.1.14"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

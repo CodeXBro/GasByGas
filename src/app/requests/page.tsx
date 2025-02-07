@@ -363,7 +363,6 @@ function Requests() {
       <div
         className="min-h-screen bg-gray-100"
         style={{ backgroundColor: "#e8e9eb" }}
-        p-4
       >
         <div className="flex flex-col items-center justify-center">
           <h1 className="text-2xl font-bold mb-4 text-gray-700 dark:text-gray-500">
